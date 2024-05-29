@@ -38,7 +38,7 @@ class DetailModel extends Model {
         float $tv1i = 3     // длительность вспомогательных операций токарной обработки
     ): float {
         $lenght = count($this->damage) * ($this->lenghtDetail(array_sum($this->damage), $yi)); // длина обрабатываемой поверхности детали с учетом врезания и пробега
-        $this -> calculateNewDiameter($this->initialDiameter, $this ->damage); // диаметр повреждений
+        $this->calculateNewDiameter($this->initialDiameter, $this ->damage); // диаметр повреждений
         $n1i = 318 * ($v1i / $this->initialDiameter); // число оборотов деталей в минуту
 
         // Расчет длительности основной токарной обработки
@@ -64,7 +64,7 @@ class DetailModel extends Model {
         $totalWear = array_sum($wears);
 
         // Диаметр повреждения = начальный диаметр - суммарный износ
-        $this -> damageDiameter = $initialDiameter - $totalWear;
+        $this->damageDiameter = $initialDiameter - $totalWear;
     }
 
     //электродуговая наплавка l = 2
@@ -74,11 +74,11 @@ class DetailModel extends Model {
 
         $density =  7.81;// плотность проволки
         $lenghtDetail = $this->Li; // длина обрабатываемой поверхности детали с учетом врезания и пробега
-        $dpri = ($this -> initialDiameter) - ($this -> damageDiameter); //диаметр проволки (начальный диаметр - диаметр детали после обработки)
-        $Isv2i = (40 * pow($this -> initialDiameter, 1/3)); // сварочный ток (А)
+        $dpri = ($this->initialDiameter) - ($this->damageDiameter); //диаметр проволки (начальный диаметр - диаметр детали после обработки)
+        $Isv2i = (40 * pow($this->initialDiameter, 1/3)); // сварочный ток (А)
         $K2ni = (2.3 + 0.065 * ($Isv2i / $dpri )); //коэффициент наплавки
-        $v2ni = ((4 * $K2ni * $Isv2i) / pi() * pow($this -> initialDiameter, 2) * $density); //скорость наплавки
-        $n2i = ((1000 * $v2ni) / (60 * pi() * $this -> initialDiameter)); // частота вращения детали
+        $v2ni = ((4 * $K2ni * $Isv2i) / pi() * pow($this->initialDiameter, 2) * $density); //скорость наплавки
+        $n2i = ((1000 * $v2ni) / (60 * pi() * $this->initialDiameter)); // частота вращения детали
         $s2i = $this ->stepWelding($dpri,  2,  2.5); //шаг наплавки детали
 
         //основное время
@@ -107,15 +107,15 @@ class DetailModel extends Model {
         // расчет основных переменных для общего времени
         $nu = 0.8 / 0.9; //коэффициент перехода
         $alpha = 0.7 / 0.85; // коэффициент отклонения толщины
-        $dpri = $this -> initialDiameter - $this -> damageDiameter; // диаметр проволки
-        $Ui = $this -> voltage($h2vi); // напряжение
+        $dpri = $this->initialDiameter - $this->damageDiameter; // диаметр проволки
+        $Ui = $this->voltage($h2vi); // напряжение
         $lenghtDetail = $this->Li; // длина обрабатываемой поверхности детали с учетом врезания и пробега
         $Isv2i = $this->electricity($dpri); // сварочный ток (А)
         $s2i = $this ->stepWelding($dpri,  1.6,  2.2); //шаг наплавки
         $vni = (0.1 * $Isv2i * $Ui) / $dpri; //величина подачи проволки
 
         $v2vi = ((0.785 * pow($dpri, 2) * $vni * $nu) / ($h2vi * $s2i * $alpha));//скорость наплавки
-        $n2i = ((1000 * $v2vi) / (60 * pi() * $this -> initialDiameter)); // частота вращения детали
+        $n2i = ((1000 * $v2vi) / (60 * pi() * $this->initialDiameter)); // частота вращения детали
 
         //основное время
         $to2i = (($k2i * $lenghtDetail) / ($n2i * $s2i));
@@ -146,8 +146,8 @@ class DetailModel extends Model {
         float $v1i = 50,     // скорость резания
         float $tv1i = 3     // длительность вспомогательных операций токарной обработки
     ): float {
-        $lenghtDetail = count($this->damage) * ($this->lenghtDetail(($this -> initialDiameter / 2), $yi)); // длина обрабатываемой поверхности детали с учетом врезания и пробега
-        $this -> calculateNewDiameter($this->initialDiameter, $this ->damage); // диаметр повреждений
+        $lenghtDetail = count($this->damage) * ($this->lenghtDetail(($this->initialDiameter / 2), $yi)); // длина обрабатываемой поверхности детали с учетом врезания и пробега
+        $this->calculateNewDiameter($this->initialDiameter, $this ->damage); // диаметр повреждений
         $n1i = 318 * ($v1i / $this->initialDiameter); // число оборотов деталей в минуту
 
         // Расчет длительности основной токарной обработки
